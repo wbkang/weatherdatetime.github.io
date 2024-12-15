@@ -44,19 +44,28 @@
         // The Wake Lock request has failed - usually system related, such as battery.
         // statusElem.textContent = `${err.name}, ${err.message}`;
       }
+
+      setInterval(updateDateTime, 1000);
     });
     document.addEventListener("visibilitychange", async () => {
       if (wakeLock !== null && document.visibilityState === "visible") {
         wakeLock = await navigator.wakeLock.request("screen");
       }
     });
-  function toggleFullScreen() {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-    } else if (document.exitFullscreen) {
-      document.exitFullscreen();
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
     }
-  }
+
+    function updateDateTime() {
+      let dt = new Date();
+      document.querySelectorAll(".dow").forEach((el) => el.textContent=dt.toLocaleString('en-us', {weekday:'long'}))
+      document.querySelectorAll(".time").forEach((el) => el.textContent=dt.toLocaleTimeString('en-US'))
+      document.querySelectorAll(".date").forEach((el) => dt.toISOString().substring(0, 10).replaceAll("-", "/"))
+    }
     
 </script>
 </head>
