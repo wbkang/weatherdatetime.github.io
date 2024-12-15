@@ -13,17 +13,21 @@
       font-style: normal;
     }
     .date-container {
-      text-align:center;
+      text-align: center;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 27%;
     }
     .dow {
       text-transform: uppercase;
-      font-size:80px;
+      font-size:50px;
     }
     .time {
       font-size:100px;
     }
     .date {
-      font-size:80px;
+      font-size:50px;
     }
   </style>
   <script type="text/javascript">
@@ -35,10 +39,10 @@
       // create an async function to request a wake lock
       try {
         wakeLock = await navigator.wakeLock.request("screen");
-        statusElem.textContent = "Wake Lock is active!";
+        // statusElem.textContent = "Wake Lock is active!";
       } catch (err) {
         // The Wake Lock request has failed - usually system related, such as battery.
-        statusElem.textContent = `${err.name}, ${err.message}`;
+        // statusElem.textContent = `${err.name}, ${err.message}`;
       }
     });
 function toggleFullScreen() {
@@ -54,17 +58,50 @@ function toggleFullScreen() {
 
 
 <body onclick="toggleFullScreen()">
-  
-<a class="weatherwidget-io" href="https://forecast7.com/en/43d76n79d41/north-york/" data-label_1="NORTH YORK" data-label_2="WEATHER" data-font="Roboto" data-icons="Climacons Animated" data-days="3" data-theme="dark" >NORTH YORK WEATHER</a>
   <script>
-  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
-  </script>
+        (function(d, s, id) {
+            if (d.getElementById(id)) {
+                if (window.__TOMORROW__) {
+                    window.__TOMORROW__.renderWidget();
+                }
+                return;
+            }
+            const fjs = d.getElementsByTagName(s)[0];
+            const js = d.createElement(s);
+            js.id = id;
+            js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
+
+            fjs.parentNode.insertBefore(js, fjs);
+        })(document, 'script', 'tomorrow-sdk');
+        </script>
+
+        <div class="tomorrow"
+           data-location-id=""
+           data-language="EN"
+           data-unit-system="METRIC"
+           data-skin="dark"
+           data-widget-type="summary"
+           style="padding-bottom:22px;position:relative;"
+        >
+          <a
+            href="https://www.tomorrow.io/weather-api/"
+            rel="nofollow noopener noreferrer"
+            target="_blank"
+            style="position: absolute; bottom: 0; transform: translateX(-50%); left: 50%;"
+          >
+            <img
+              alt="Powered by the Tomorrow.io Weather API"
+              src="https://weather-website-client.tomorrow.io/img/powered-by.svg"
+              width="250"
+              height="18"
+            />
+          </a>
+        </div>
   <div class="date-container">
     <div class="dow">SUNDAY</div>
     <div class="time">11:21:53 AM</div>
     <div class="date">2024/12/15</div>
   </div>
-  <span id="status">status</span>
 
 
 </body>
