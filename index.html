@@ -2,13 +2,33 @@
 <html>
 <head>
   <style>
-    .html {
+    html {
       background-color: #000;
+      color:#ddd;
+    }
+    .date-container {
+      text-align:center;
+    }
+    .dow {
+      text-transform: uppercase;
+      font-size:80px;
+    }
+    .time {
+      font-size:100px;
+    }
+    .date {
+      font-size:80px;
     }
   </style>
 </head>
   
 <body>
+
+  <div class="date-container">
+    <div class="dow">SUNDAY</div>
+    <div class="time">11:21:53 AM</div>
+    <div class="date">2024/12/15</div>
+  </div>
   <span id="status">status</span>
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", async () => {
