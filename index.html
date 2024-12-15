@@ -34,11 +34,10 @@
     document.addEventListener("DOMContentLoaded", async () => {
         
       // Create a reference for the Wake Lock.
-      let wakeLock = null;
       let statusElem = document.querySelectorAll("#status")[0];
       // create an async function to request a wake lock
       try {
-        wakeLock = await navigator.wakeLock.request("screen");
+        window.__wakeLock = await navigator.wakeLock.request("screen");
         // statusElem.textContent = "Wake Lock is active!";
       } catch (err) {
         // The Wake Lock request has failed - usually system related, such as battery.
@@ -51,8 +50,8 @@
       setTimeout(() => reloadWeather(), 10000);
     });
     document.addEventListener("visibilitychange", async () => {
-      if (wakeLock !== null && document.visibilityState === "visible") {
-        wakeLock = await navigator.wakeLock.request("screen");
+      if (window.__wakeLock !== null && document.visibilityState === "visible") {
+        window.__wakeLock = await navigator.wakeLock.request("screen");
       }
     });
     function toggleFullScreen() {
