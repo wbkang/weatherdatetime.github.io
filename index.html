@@ -47,7 +47,7 @@
       setInterval(updateDateTime, 1000);
       updateDateTime();
       reloadWeather();
-      setTimeout(() => reloadWeather(), 10000);
+      setInterval(() => reloadWeather(), 1800000);
     });
     document.addEventListener("visibilitychange", async () => {
       if (window.__wakeLock !== null && document.visibilityState === "visible") {
