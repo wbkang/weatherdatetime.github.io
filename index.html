@@ -86,8 +86,8 @@
           </a>
         </div>`;
       document.querySelectorAll(".tomorrow").forEach((el)=>el.outerHTML = todayhtml);
-      if (d.getElementById('tomorrow-sdk')) {
-        d.getElementById('tomorrow-sdk').remove()
+      if (document.getElementById('tomorrow-sdk')) {
+        document.getElementById('tomorrow-sdk').remove()
       }
       (function(d, s, id) {
         if (d.getElementById(id)) {
