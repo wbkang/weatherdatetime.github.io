@@ -46,7 +46,8 @@
       }
 
       setInterval(updateDateTime, 1000);
-      setTimeout(() => navigation.reload(), 10000);
+      updateDateTime();
+      setTimeout(() => updateDateTime(), 10000);
     });
     document.addEventListener("visibilitychange", async () => {
       if (wakeLock !== null && document.visibilityState === "visible") {
@@ -61,11 +62,52 @@
       }
     }
 
+    function reloadWeather() {
+      let todayhtml = `<div class="tomorrow"
+           data-location-id=""
+           data-language="EN"
+           data-unit-system="METRIC"
+           data-skin="dark"
+           data-widget-type="summary"
+           style="position: absolute;bottom: 0;left: 0;right: 0;">
+          <a
+            href="https://www.tomorrow.io/weather-api/"
+            rel="nofollow noopener noreferrer"
+            target="_blank"
+            style="position: absolute; bottom: 0; transform: translateX(-50%); left: 50%;"
+          >
+            <img
+              alt="Powered by the Tomorrow.io Weather API"
+              src="https://weather-website-client.tomorrow.io/img/powered-by.svg"
+              width="250"
+              height="18"
+            />
+          </a>
+        </div>`;
+      document.querySelectorAll(".tomorrow").forEach((el)=>el.outerHTML = todayhtml);
+    }
+
     function updateDateTime() {
       let dt = new Date();
       document.querySelectorAll(".dow").forEach((el) => el.textContent=dt.toLocaleString('en-us', {weekday:'long'}))
       document.querySelectorAll(".time").forEach((el) => el.textContent=dt.toLocaleTimeString('en-US'))
-      document.querySelectorAll(".date").forEach((el) => dt.toISOString().substring(0, 10).replaceAll("-", "/"))
+      document.querySelectorAll(".date").forEach(
+        (el) => el.textContent=dt.toISOString().substring(0, 10).replaceAll("-", "/")
+      );
+      (function(d, s, id) {
+        if (d.getElementById(id)) {
+            if (window.__TOMORROW__) {
+                window.__TOMORROW__.renderWidget();
+            }
+            return;
+        }
+        const fjs = d.getElementsByTagName(s)[0];
+        const js = d.createElement(s);
+        js.id = id;
+        js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
+
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, 'script', 'tomorrow-sdk');
     }
     
 </script>
@@ -74,20 +116,7 @@
 
 <body onclick="toggleFullScreen()">
   <script>
-        (function(d, s, id) {
-            if (d.getElementById(id)) {
-                if (window.__TOMORROW__) {
-                    window.__TOMORROW__.renderWidget();
-                }
-                return;
-            }
-            const fjs = d.getElementsByTagName(s)[0];
-            const js = d.createElement(s);
-            js.id = id;
-            js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
 
-            fjs.parentNode.insertBefore(js, fjs);
-        })(document, 'script', 'tomorrow-sdk');
         </script>
 
         <div class="tomorrow"
