@@ -47,7 +47,8 @@
 
       setInterval(updateDateTime, 1000);
       updateDateTime();
-      setTimeout(() => updateDateTime(), 10000);
+      reloadWeather();
+      setTimeout(() => reloadWeather(), 10000);
     });
     document.addEventListener("visibilitychange", async () => {
       if (wakeLock !== null && document.visibilityState === "visible") {
@@ -85,15 +86,9 @@
           </a>
         </div>`;
       document.querySelectorAll(".tomorrow").forEach((el)=>el.outerHTML = todayhtml);
-    }
-
-    function updateDateTime() {
-      let dt = new Date();
-      document.querySelectorAll(".dow").forEach((el) => el.textContent=dt.toLocaleString('en-us', {weekday:'long'}))
-      document.querySelectorAll(".time").forEach((el) => el.textContent=dt.toLocaleTimeString('en-US'))
-      document.querySelectorAll(".date").forEach(
-        (el) => el.textContent=dt.toISOString().substring(0, 10).replaceAll("-", "/")
-      );
+      if (d.getElementById('tomorrow-sdk')) {
+        d.getElementById('tomorrow-sdk').remove()
+      }
       (function(d, s, id) {
         if (d.getElementById(id)) {
             if (window.__TOMORROW__) {
@@ -108,6 +103,16 @@
 
         fjs.parentNode.insertBefore(js, fjs);
       })(document, 'script', 'tomorrow-sdk');
+    }
+
+    function updateDateTime() {
+      let dt = new Date();
+      document.querySelectorAll(".dow").forEach((el) => el.textContent=dt.toLocaleString('en-us', {weekday:'long'}))
+      document.querySelectorAll(".time").forEach((el) => el.textContent=dt.toLocaleTimeString('en-US'))
+      document.querySelectorAll(".date").forEach(
+        (el) => el.textContent=dt.toISOString().substring(0, 10).replaceAll("-", "/")
+      );
+
     }
     
 </script>
