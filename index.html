@@ -108,9 +108,9 @@
       let dt = new Date();
       document.querySelectorAll(".dow").forEach((el) => el.textContent=dt.toLocaleString('en-us', {weekday:'long'}))
       document.querySelectorAll(".time").forEach(
-        (el) => el.textContent=`${dt.getFullYear()}/${dt.getMonth()+1}/${dt.getDate()}`)
+        (el) => el.textContent=dt.toLocaleTimeString('en-US', { hour: "2-digit", minute: "2-digit" }))
       document.querySelectorAll(".date").forEach(
-        (el) => el.textContent=dt.toISOString().substring(0, 10).replaceAll("-", "/")
+        (el) => `${dt.getFullYear()}/${dt.getMonth()+1}/${dt.getDate()}`
       );
 
     }
