@@ -110,7 +110,7 @@
       document.querySelectorAll(".time").forEach(
         (el) => el.textContent=dt.toLocaleTimeString('en-US', { hour: "2-digit", minute: "2-digit" }))
       document.querySelectorAll(".date").forEach(
-        (el) => `${dt.getFullYear()}/${dt.getMonth()+1}/${dt.getDate()}`
+        (el) => el.textContent=`${dt.getFullYear()}/${dt.getMonth()+1}/${dt.getDate()}`
       );
 
     }
